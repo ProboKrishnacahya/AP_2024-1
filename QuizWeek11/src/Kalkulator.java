@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Kalkulator {
-    String[][] riwayat = new String[100][2]; // Menyimpan jenis operasi dan hasil
+    String[][] riwayat = new String[100][2]; // Menyimpan 100 baris data (contoh) dan 2 kolom data yaitu jenis operasi dan hasil perhitungan
     int indexRiwayat = 0; // Index untuk riwayat perhitungan
     Scanner scanner = new Scanner(System.in);
 
@@ -20,17 +20,18 @@ public class Kalkulator {
             System.out.print("Pilih menu: ");
             int pilihan = kalkulator.scanner.nextInt();
 
-            if (pilihan == 7) {
-                System.out.println("Program selesai.");
-                break;
-            }
-
             switch (pilihan) {
                 case 1: // Tambah
+                    kalkulator.tambah();
+                    break;
                 case 2: // Kurang
+                    kalkulator.kurang();
+                    break;
                 case 3: // Kali
+                    kalkulator.kali();
+                    break;
                 case 4: // Bagi
-                    kalkulator.operasi(pilihan); // Panggil operasi sesuai pilihan
+                    kalkulator.bagi();
                     break;
                 case 5: // Lihat riwayat
                     kalkulator.lihatRiwayat();
@@ -38,50 +39,58 @@ public class Kalkulator {
                 case 6: // Hapus seluruh riwayat
                     kalkulator.hapusRiwayat();
                     break;
+                case 7: // Keluar
+                    kalkulator.keluar();
                 default:
-                    System.out.println("Pilihan tidak valid.");
+                    System.out.println("Pilihan tidak valid. Harus angka 1-7.");
             }
         }
     }
 
-    public void operasi(int pilihan) {
+    public void tambah() {
+        double[] angka = inputAngka();
+        double hasil = angka[0] + angka[1];
+        simpanRiwayat("Penjumlahan", hasil);
+        System.out.println("Hasil Penjumlahan: " + hasil);
+    }
+
+    public void kurang() {
+        double[] angka = inputAngka();
+        double hasil = angka[0] - angka[1];
+        simpanRiwayat("Pengurangan", hasil);
+        System.out.println("Hasil Pengurangan: " + hasil);
+    }
+
+    public void kali() {
+        double[] angka = inputAngka();
+        double hasil = angka[0] * angka[1];
+        simpanRiwayat("Perkalian", hasil);
+        System.out.println("Hasil Perkalian: " + hasil);
+    }
+
+    public void bagi() {
+        double[] angka = inputAngka();
+        if (angka[1] == 0) {
+            System.out.println("Pembagi tidak boleh 0.");
+            return;
+        }
+        double hasil = angka[0] / angka[1];
+        simpanRiwayat("Pembagian", hasil);
+        System.out.println("Hasil Pembagian: " + hasil);
+    }
+
+    public double[] inputAngka() {
         System.out.print("Masukkan angka pertama: ");
         double angka1 = scanner.nextDouble();
         System.out.print("Masukkan angka kedua: ");
         double angka2 = scanner.nextDouble();
+        return new double[] { angka1, angka2 }; // Mengembalikan array double dengan 2 angka yang dimasukkan
+    }
 
-        double hasil = 0;
-        String operasi = "";
-
-        switch (pilihan) {
-            case 1: // Tambah
-                hasil = angka1 + angka2;
-                operasi = "Penjumlahan";
-                break;
-            case 2: // Kurang
-                hasil = angka1 - angka2;
-                operasi = "Pengurangan";
-                break;
-            case 3: // Kali
-                hasil = angka1 * angka2;
-                operasi = "Perkalian";
-                break;
-            case 4: // Bagi
-                if (angka2 == 0) {
-                    System.out.println("Pembagi tidak boleh 0.");
-                    return;
-                }
-                hasil = angka1 / angka2;
-                operasi = "Pembagian";
-                break;
-        }
-
-        // Simpan riwayat
-        riwayat[indexRiwayat][0] = operasi;
-        riwayat[indexRiwayat][1] = String.valueOf(hasil);
-        indexRiwayat++;
-
-        System.out.println("Hasil " + operasi + ": " + hasil);
+    public void simpanRiwayat(String operasi, double hasil) {
+        riwayat[indexRiwayat][0] = operasi; // Menyimpan jenis operasi
+        riwayat[indexRiwayat][1] = String.valueOf(hasil); // Menyimpan dan casting hasil perhitungan dari double ke string
+        indexRiwayat++; // Menambahkan index untuk riwayat perhitungan
     }
 
     public void lihatRiwayat() {
@@ -102,12 +111,14 @@ public class Kalkulator {
             return;
         }
 
-        // Mengosongkan riwayat
-        for (int i = 0; i < indexRiwayat; i++) {
-            riwayat[i][0] = null;
-            riwayat[i][1] = null;
-        }
+        // Membuat array baru untuk menghapus seluruh data lama
+        riwayat = new String[100][2];
         indexRiwayat = 0;
         System.out.println("Seluruh riwayat telah dihapus.");
+    }
+
+    public void keluar() {
+        System.out.println("Program selesai.");
+        System.exit(0);
     }
 }

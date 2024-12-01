@@ -22,12 +22,12 @@ public class SeleksiAtletRenang {
             scanner.nextLine();
         }
 
-        // Variabel untuk mencari waktu tercepat dan terlambat
-        int waktuTercepat = Integer.MAX_VALUE; // Inisialisasi dengan nilai maksimum
-        int waktuTerlambat = -1; // Inisialisasi dengan nilai minimum
-        String namaTercepat = "";
-        String namaTerlambat = "";
-        
+        // Variabel untuk mencari waktu tercepat dan terlambat serta nama atletnya
+        int waktuTercepat = waktuTempuh[0];
+        int waktuTerlambat = waktuTempuh[0];
+        String namaTercepat = namaAtlet[0];
+        String namaTerlambat = namaAtlet[0];
+
         // Array untuk menandai atlet yang gagal seleksi
         boolean[] gagalSeleksi = new boolean[jumlahAtlet];
 
@@ -36,16 +36,16 @@ public class SeleksiAtletRenang {
             // Cek waktu tercepat
             if (waktuTempuh[i] < waktuTercepat) {
                 waktuTercepat = waktuTempuh[i];
-                namaTercepat = namaAtlet[i]; // Simpan nama atlet tercepat
+                namaTercepat = namaAtlet[i];
             }
             // Cek waktu terlambat
             if (waktuTempuh[i] > waktuTerlambat) {
                 waktuTerlambat = waktuTempuh[i];
-                namaTerlambat = namaAtlet[i]; // Simpan nama atlet terlambat
+                namaTerlambat = namaAtlet[i];
             }
             // Tandai atlet yang gagal seleksi
             if (waktuTempuh[i] > 15) {
-                gagalSeleksi[i] = true; // Atlet gagal seleksi
+                gagalSeleksi[i] = true;
             }
         }
 
